@@ -25,8 +25,8 @@ Feature: Smoke
     #Then User checks that '<textMessage>' message is displayed
 
     #Examples:
-     # | homePage              | keyword | textMessage                           |
-     # | https://www.asos.com/ | nike    | You have no Saved Items               |
+     # | homePage              | keyword | textMessage             |
+     # | https://www.asos.com/ | nike    | You have no Saved Items |
 
   #Scenario Outline: Check sign in with invalid email
     #Given User opens '<homePage>' page
@@ -35,8 +35,8 @@ Feature: Smoke
     #Then User can see the '<errorMessage>' message
 
     #Examples:
-     # | homePage              | email | errorMessage                                                       |
-     # | https://www.asos.com/ | @ww   | Email fail! Please type in your correct email address              |
+     # | homePage              | email | errorMessage                                          |
+     # | https://www.asos.com/ | @ww   | Email fail! Please type in your correct email address |
 
   #Scenario Outline: Check sign in with invalid email
     #Given User opens '<homePage>' page
@@ -45,7 +45,84 @@ Feature: Smoke
     #Then User can not see the '<errorMessage>' message
 
     #Examples:
-     # | homePage              | email            | errorMessage                                                       |
-     # | https://www.asos.com/ | test@gmail.com   | Email fail! Please type in your correct email address              |
+     # | homePage              | email          | errorMessage                                          |
+     # | https://www.asos.com/ | test@gmail.com | Email fail! Please type in your correct email address |
 
-  #Scenario Outline:
+  #Scenario Outline: Check total products number in the cart
+    #Given User opens '<homePage>' page
+    #And User click on Women page
+    #And User clicks on biggest deals button
+    #And User adds all products on page to wishlist
+    #And User clicks on wishlist page
+    #When User adds all products to cart
+    #And Clicks on cart button
+    #Then User can see total products number
+
+    #Examples:
+      # | homePage              |
+      # | https://www.asos.com/ |
+
+
+
+  #Scenario Outline: Check total products price in the cart
+    #Given User opens '<homePage>' page
+    #And User click on Women page
+    #And User clicks on biggest deals button
+    #And User adds all products on page to wishlist
+    #And User clicks on wishlist page
+    #When User adds all products to cart
+    #And Clicks on view bag button
+    #Then User can see total products price
+
+    #Examples:
+      #| homePage              |
+      #| https://www.asos.com/ |
+
+
+  #Scenario Outline: Check that nothing matches your search
+    #Given User opens '<homePage>' page
+    #When User makes search by keyword '<keyword>'
+    #And User clicks search button
+    #Then User can see '<textMessage>' message
+
+    #Examples:
+      #| homePage              | keyword    | textMessage                 |
+      #| https://www.asos.com/ | dddddddddd | NOTHING MATCHES YOUR SEARCH |
+
+  #Scenario Outline: Check language change
+    #Given User opens '<homePage>' page
+    #When User change country to France
+    #Then User can see the '<text>' text on the Help & FAQs button
+
+    #Examples:
+      #| homePage              | text        |
+      #| https://www.asos.com/ | Aide et FAQ |
+
+  #Scenario Outline: Check number of products on the page
+    #Given User opens '<homePage>' page
+    #When User makes search by keyword '<keyword>'
+    #And User clicks search button
+    #Then User can see '<number>' number of products on the page
+
+    #Examples:
+      #| homePage              | keyword | number |
+      #| https://www.asos.com/ | nike    | 72     |
+
+  #Scenario Outline: Check number of topics on the help page
+    #Given User opens '<homePage>' page
+    #When User clicks Help & FAQs button
+    #Then User can see '<topicNumber>' topics
+
+    #Examples:
+      #| homePage              | topicNumber |
+      #| https://www.asos.com/ | 6           |
+
+  Scenario Outline: Check number of questions on page
+    Given User opens '<homePage>' page
+    And User clicks Help & FAQs button
+    When user clicks on Delivery topic page
+    Then User can see '<questionNumber>' on page
+
+    Examples:
+      | homePage              | questionNumber |
+      | https://www.asos.com/ | 12             |
