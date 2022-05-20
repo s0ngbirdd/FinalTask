@@ -3,22 +3,17 @@ package stepdefinitions;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
-
-import java.util.NoSuchElementException;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 
 public class DefinitionSteps {
 
-    private static final long DEFAULT_TIMEOUT = 300;
+    private static final long DEFAULT_TIMEOUT = 200;
 
     WebDriver driver;
     HomePage homePage;
@@ -26,7 +21,6 @@ public class DefinitionSteps {
     WishlistPage wishlistPage;
     SignInPage signInPage;
     WomenPage womenPage;
-    CartPage cartPage;
     HelpPage helpPage;
     DeliveryQuestionsPage deliveryQuestionsPage;
 
@@ -82,7 +76,7 @@ public class DefinitionSteps {
         wishlistPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         wishlistPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         wishlistPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, wishlistPage.getWishlistAmountElement());
-        Assert.assertEquals(wishlistPage.getWishlistAmount(), amount);
+        Assert.assertEquals(amount, wishlistPage.getWishlistAmount());
     }
 
     @And("User deletes all products from wishlist")
@@ -96,11 +90,11 @@ public class DefinitionSteps {
     @And("User checks that {string} message is displayed")
     public void userChecksThatTextMessageMessageIsDisplayed(final String message) {
         wishlistPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, wishlistPage.getNoSavedItemsElement());
-        Assert.assertEquals(wishlistPage.getNoSavedItemsText(), message);
+        Assert.assertEquals(message, wishlistPage.getNoSavedItemsText());
     }
 
-    @And("User clicks on the sign in button")
-    public void userClicksOnTheSignInButton() {
+    @And("User clicks on sign in button")
+    public void userClicksOnSignInButton() {
         homePage.cliсkSignInButton();
     }
 
@@ -112,14 +106,14 @@ public class DefinitionSteps {
         signInPage.enterEmail(email);
     }
 
-    @And("User can see the {string} message")
-    public void userCanSeeTheErrorMessageMessage(final String message) {
+    @And("User can see {string} error message")
+    public void userCanSeeErrorMessageErrorMessage(final String message) {
         signInPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, signInPage.getEmailErrorMessageElement());
-        Assert.assertEquals(signInPage.getEmailErrorMessageText(), message);
+        Assert.assertEquals(message, signInPage.getEmailErrorMessageText());
     }
 
-    @And("User can not see the {string} message")
-    public void userCanNotSeeTheErrorMessageMessage() {
+    @And("User can not see error message")
+    public void userCanNotSeeErrorMessage() {
         Assert.assertFalse(signInPage.existsEmailErrorMessageElement());
     }
 
@@ -142,6 +136,7 @@ public class DefinitionSteps {
             wishlistPage = pageFactoryManager.getWishlistPage();
             wishlistPage.addAllItemsToCart();
         } catch (InterruptedException e) {
+            //
         }
     }
 
@@ -159,34 +154,13 @@ public class DefinitionSteps {
         Assert.assertEquals(homePage.getCartItemsNumberText(), wishlistPage.getCartItemsNumber());
     }
 
-
-
-
-    @And("Clicks on view bag button")
-    public void clicksOnViewBagButton() {
-        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getCartButton());
-        homePage.clickViewBagButton();
-    }
-
-    @And("User can see total products price")
-    public void userCanSeeTotalProductsPrice() {
-        cartPage = pageFactoryManager.getCartPage();
-        cartPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        cartPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        cartPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, cartPage.getSubTotalElement());
-        Assert.assertEquals(cartPage.getSubTotalText(), wishlistPage.getTotalAmount());
-    }
-
-
-
-
     @And("User can see {string} message")
     public void userCanSeeTextMessageMessage(final String message) {
         searchResultsPage = pageFactoryManager.getSearchResultsPage();
         searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultsPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultsPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, searchResultsPage.getNothingMatchesTextElement());
-        Assert.assertEquals(searchResultsPage.getNothingMatchesText(), message);
+        Assert.assertEquals(message, searchResultsPage.getNothingMatchesText());
     }
 
     @And("User change country to France")
@@ -194,35 +168,19 @@ public class DefinitionSteps {
         homePage.changeCountry();
     }
 
-    /*@And("User can see placeholder {string} text on the search field")
-    public void userCanSeePlaceholderTextMessageTextOnTheSearchField(final String message) {
+    @And("User can see {string} text on Help & FAQs button")
+    public void userCanSeeTextTextOnHelpFAQsButton(final String text) {
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         homePage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        Assert.assertEquals(homePage.getSearchPlaceholderText(), message);
-    }*/
-
-    /*@And("User can see France placeholder text on the search field")
-    public void userCanSeeFrancePlaceholderTextOnTheSearchField() {
-        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        homePage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        //Assert.assertEquals(homePage.getSearchPlaceholderText(), homePage.getPlaceholderFrance());
-        //Assert.assertEquals(homePage.getSearchPlaceholderText(), homePage.getPlaceholderFrance());
-        Assert.assertEquals(homePage.getHelpButtonText(), "Aide et FAQ");
-    }*/
-
-    @And("User can see the {string} text on the Help & FAQs button")
-    public void userCanSeeTheTextTextOnTheHelpFAQsButton(final String text) {
-        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        homePage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        Assert.assertEquals(homePage.getHelpButtonText(), text);
+        Assert.assertEquals(text, homePage.getHelpButtonText());
     }
 
-    @And("User can see {string} number of products on the page")
-    public void userCanSeeNumberNumberOfProductsOnThePage(final String number) {
+    @And("User can see {string} number of products on search page")
+    public void userCanSeeNumberNumberOfProductsOnSearchPage(final String number) {
         searchResultsPage = pageFactoryManager.getSearchResultsPage();
         searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultsPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        Assert.assertEquals(searchResultsPage.getCountItemsOnPage(), number);
+        Assert.assertEquals(number, searchResultsPage.getCountItemsOnPage());
     }
 
     @And("User clicks Help & FAQs button")
@@ -235,7 +193,7 @@ public class DefinitionSteps {
         helpPage = pageFactoryManager.getHelpPage();
         helpPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         helpPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        Assert.assertEquals(helpPage.getTopicCount(), number);
+        Assert.assertEquals(number, helpPage.getTopicCount());
     }
 
     @And("user clicks on Delivery topic page")
@@ -249,6 +207,6 @@ public class DefinitionSteps {
         deliveryQuestionsPage = pageFactoryManager.getDeliveryQuestionsPage();
         deliveryQuestionsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         deliveryQuestionsPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        Assert.assertEquals(deliveryQuestionsPage.getQuestionsCount(), number);
+        Assert.assertEquals(number, deliveryQuestionsPage.getQuestionsCount());
     }
 }

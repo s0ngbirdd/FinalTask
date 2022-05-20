@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 
 public class WishlistPage extends BasePage {
 
-    private static final long DEFAULT_TIMEOUT = 300;
+    private static final long DEFAULT_TIMEOUT = 200;
     private int cartItems = 0;
     private float totalAmount = 0;
 
@@ -51,17 +51,6 @@ public class WishlistPage extends BasePage {
     }
 
     public void deleteAllProductsFromWishlist() {
-        /*waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        for (WebElement webElement : deleteFromWishlistButtons) {
-            waitVisibilityOfElement(DEFAULT_TIMEOUT, webElement);
-            //waitForAjaxToComplete(DEFAULT_TIMEOUT);
-            webElement.click();
-            waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        }
-        waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        waitForAjaxToComplete(DEFAULT_TIMEOUT);*/
-
         waitVisibilityOfElement(DEFAULT_TIMEOUT, wishlistAmount);
         for (int i = 0; i < Integer.valueOf(getWishlistAmount()); i++) {
             waitVisibilityOfElement(DEFAULT_TIMEOUT, deleteFromWishlistButtons.get(i));
@@ -70,34 +59,24 @@ public class WishlistPage extends BasePage {
     }
 
     public WebElement getNoSavedItemsElement() {
-        //((JavascriptExecutor)driver).executeScript("scroll(0,400)");
         return noSavedItemsText;
     }
 
     public String getNoSavedItemsText() {
-        //((JavascriptExecutor)driver).executeScript("scroll(0,400)");
         return noSavedItemsText.getText();
     }
 
     public void addAllItemsToCart() throws InterruptedException {
         waitVisibilityOfElement(DEFAULT_TIMEOUT, wishlistAmount);
         for (int i = 0; i < Integer.valueOf(getWishlistAmount()); i++) {
-        //for (int i = 0; i < 50; i++) {
             waitVisibilityOfElement(DEFAULT_TIMEOUT, addToCartButtons.get(i));
-            /*try{
-                if (addToCartButtons.get(i).isEnabled()) {
-                    addToCartButtons.get(i).click();
-                    cartItems++;
-                }
-            } catch (NullPointerException e) {
-
-            }*/
             if (addToCartButtons.get(i).isEnabled()) {
                 addToCartButtons.get(i).click();
                 cartItems++;
                 waitVisibilityOfElement(DEFAULT_TIMEOUT, closeCartPopup);
                 closeCartPopup.click();
                 addToTotalAmount(prices.get(i).getText());
+                //implicitWait(300);
                 Thread.sleep(300);
             }
         }

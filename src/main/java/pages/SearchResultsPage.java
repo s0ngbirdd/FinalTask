@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SearchResultsPage extends BasePage {
 
-    private static final long DEFAULT_TIMEOUT = 300;
+    private static final long DEFAULT_TIMEOUT = 200;
     private int countItemsOnPage = 0;
 
     @FindBy(xpath = "//button[@aria-label='Save for later']")

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class HelpPage extends BasePage{
 
-    private static final long DEFAULT_TIMEOUT = 100;
+    private static final long DEFAULT_TIMEOUT = 200;
     private int topicCount = 0;
 
     @FindBy(xpath = "//div[@class='Card_card Card_homepageTopicWrapper']")

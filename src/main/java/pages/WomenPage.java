@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class WomenPage extends BasePage{
 
-    private static final long DEFAULT_TIMEOUT = 300;
+    private static final long DEFAULT_TIMEOUT = 200;
 
     @FindBy(xpath = "//button[@class='_2syfS2P _1njuHQk otVu6ZN' and @aria-controls='57242f2c-d207-471c-95b1-31d6839df360']")
     private WebElement saleButton;

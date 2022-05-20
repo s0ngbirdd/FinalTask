@@ -31,10 +31,6 @@ public class PageFactoryManager {
         return new WomenPage(driver);
     }
 
-    public CartPage getCartPage() {
-        return new CartPage(driver);
-    }
-
     public HelpPage getHelpPage() {
         return new HelpPage(driver);
     }

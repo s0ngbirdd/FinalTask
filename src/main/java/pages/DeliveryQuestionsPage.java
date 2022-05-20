@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DeliveryQuestionsPage extends BasePage {
 
-    private static final long DEFAULT_TIMEOUT = 100;
+    private static final long DEFAULT_TIMEOUT = 200;
     private int questionCount = 0;
 
     @FindBy(xpath = "//li[contains(@class,'CardListItem_iconRight')]//a[@class='CardListItem_anchor']")
