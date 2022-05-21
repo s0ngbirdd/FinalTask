@@ -33,8 +33,4 @@ public class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeToWait));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
-
-    public void implicitWait(long timeToWait) {
-        driver.manage().timeouts().implicitlyWait(timeToWait, TimeUnit.SECONDS);
-    }
 }
